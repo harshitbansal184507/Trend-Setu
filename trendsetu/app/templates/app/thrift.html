@@ -1,0 +1,110 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Thrift{% endblock title %}
+{% block main-content %}
+<style>
+    /* General body styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4; /* Light grey background */
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Heading styling */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2.5em;
+        color: #d63c2e; /* Dark red for title */
+        text-transform: uppercase;
+    }
+
+    /* Styling for the product list */
+    ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; /* Spacing between items */
+    }
+
+    /* Individual product styling */
+    .product {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s; /* Animation for hover effect */
+        width: 300px; /* Fixed width for uniformity */
+        text-align: center; /* Center text within the product card */
+    }
+
+    /* Hover effect for products */
+    .product:hover {
+        transform: translateY(-5px); /* Lift effect */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Image styling */
+    img {
+        width: 100%; /* Ensures images take full width */
+        height: 400px; /* Fixed height for uniformity, adjust as needed */
+        object-fit: contain; /* Fit images without cropping */
+        background-color: #e7e7e7; /* Light grey background for images */
+    }
+
+    /* Product title styling */
+    h2 {
+        font-size: 1.5em;
+        margin: 10px 0;
+        color: #d63c2e; /* Dark red for product titles */
+    }
+
+    /* Product info styling */
+    p {
+        margin: 5px 10px;
+        color: #555;
+    }
+
+    /* Button styling */
+    .button {
+        display: block;
+        background-color: #d63c2e; /* Dark red button */
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin: 10px auto;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Animation for button hover */
+        text-decoration: none; /* Remove underline */
+        font-weight: bold; /* Make button text bold */
+    }
+
+    .button:hover {
+        background-color: #b72a23; /* Darker red on hover */
+    }
+</style>
+
+<h1>Clothing</h1>
+<ul>
+    {% for product in products %}
+        <li class="product">
+            <img src="{{ product.image.url }}" alt="{{ product.title }}">
+            <h2>{{ product.title }}</h2>
+            <p><strong>Brand:</strong> {{ product.brand }}</p>
+            <p><strong>Size:</strong> {{ product.size }}</p>
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <p><strong>Category:</strong> {{ product.get_category_display }}</p>
+            <p><strong>Color:</strong> {{ product.color }}</p>
+            <a href="#" class="button">Add to Cart</a>
+        </li>
+    {% empty %}
+        <li>No products available.</li>
+    {% endfor %}
+</ul>
+{% endblock main-content %}
