@@ -1,0 +1,369 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block banner-slider %}
+<style>
+    /* Modern carousel styling */
+    .hero-carousel {
+        margin-bottom: 2rem;
+    }
+    .carousel-item {
+        height: auto;
+        max-height: 600px;
+        overflow: hidden;
+    }
+    .carousel-item img {
+        width: 100%;
+        height: auto;
+        max-height: 600px;
+        object-fit: contain;
+    }
+    /* Modern indicators */
+    .carousel-indicators {
+        bottom: 20px;
+    }
+    .carousel-indicators li {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin: 0 5px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+    .carousel-indicators li.active {
+        background-color: #fff;
+        transform: scale(1.2);
+    }
+    /* Modern controls */
+    .carousel-control-prev, .carousel-control-next {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    .hero-carousel:hover .carousel-control-prev,
+    .hero-carousel:hover .carousel-control-next {
+        opacity: 1;
+    }
+    /* Modern captions */
+    .carousel-caption {
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 40px 20px 20px;
+        text-align: left;
+    }
+    .carousel-caption h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .carousel-caption p {
+        font-size: 1.1rem;
+    }
+    /* Hover effect for images */
+    .carousel-item img {
+        transition: transform 8s ease;
+    }
+    .carousel-item.active img {
+        transform: scale(1.05);
+    }
+    /* Custom progress bar */
+    .carousel-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: #fff;
+        z-index: 100;
+    }
+    
+</style>
+
+<section class="hero-section">
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-ride="carousel">
+        <!-- Progress Bar -->
+        <div class="carousel-progress"></div>
+        
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#heroCarousel" data-slide-to="1"></li>
+            <li data-target="#heroCarousel" data-slide-to="2"></li>
+            <li data-target="#heroCarousel" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'app/images/banner/first.png'%}" alt="First slide">
+                <div class="carousel-caption">
+                    <h2>New Collection</h2>
+                    <p>Discover latest collections</p>
+                    <a href="#" class="btn btn-light">Shop Now</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'app/images/banner/palak.png'%}" alt="Second slide">
+                <div class="carousel-caption">
+                    <h2>Palak Collection</h2>
+                    <p>Elegance redefined with our premium selection</p>
+                    <a href="#" class="btn btn-light">Explore</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'app/images/banner/bridal.png'%}" alt="Third slide">
+                <div class="carousel-caption">
+                    <h2>Bridal Dreams</h2>
+                    <p>Make your special day perfect with our bridal collection</p>
+                    <a href="#" class="btn btn-light">View Collection</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'app/images/banner/collections.png'%}" alt="Fourth slide">
+                <div class="carousel-caption">
+                    <h2>Special Collections</h2>
+                    <p>Curated pieces for every occasion</p>
+                    <a href="{ % url 'thrift' % }" class="btn btn-light">Discover More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</section>
+
+<!-- JavaScript for carousel functionality -->
+<script>
+$(document).ready(function(){
+    // Initialize carousel
+    $('#heroCarousel').carousel({
+        interval: 5000 // 5 seconds between slides
+    });
+
+    // Progress bar functionality
+    function startProgressBar() {
+        var $progress = $('.carousel-progress');
+        $progress.css('width', '0%');
+        $progress.animate({
+            width: '100%'
+        }, 5000, 'linear');
+    }
+
+    // Reset and start progress bar on slide change
+    $('#heroCarousel').on('slide.bs.carousel', function () {
+        startProgressBar();
+    });
+
+    // Start progress bar on page load
+    startProgressBar();
+
+    // Pause carousel on hover
+    $('.hero-carousel').hover(
+        function() {
+            $(this).carousel('pause');
+            $('.carousel-progress').stop();
+        },
+        function() {
+            $(this).carousel('cycle');
+            startProgressBar();
+        }
+    );
+});
+</script>
+{% endblock banner-slider %}
+
+<div
+{% block main-content %}
+<<style>
+    @keyframes wave {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        20% {
+            transform: translateX(-5px);
+        }
+        40% {
+            transform: translateX(5px);
+        }
+        60% {
+            transform: translateX(-5px);
+        }
+        80% {
+            transform: translateX(5px);
+        }
+    }
+
+    .products-text {
+        display: inline-block; /* Required for the animation to work */
+        animation: wave 1s ease-in-out infinite; /* Added animation here */
+    }
+</style>
+<div class="container mt-4">
+    <h1 class="text-center mb-4"></h1>
+
+
+    <div class="container mt-5">
+        <h1 class="products-text display-4 text-center">TrendSetu - Where Style Meets Ease</h1>
+        <small class="fs-5 text-center d-block mt-3" style="background-color: #FF8C00; padding: 10px; border-radius: 5px; color: white;">
+            Welcome to TrendSetu, your go-to platform for thrifting and renting branded clothing. Discover affordable, stylish, and sustainable fashion, all brought to you through our modern, easy-to-use platform.
+        </small>
+    </div>
+
+
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Buy Branded Thrift Clothes</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product1.png' %}" alt="Product 1" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 1</h5>
+                    <p class="price">$29.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product2.png' %}" alt="Product 2" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 2</h5>
+                    <p class="price">$39.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product3.png' %}" alt="Product 3" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 3</h5>
+                    <p class="price">$49.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Luxury Bags</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product1.png' %}" alt="Product 1" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 1</h5>
+                    <p class="price">$29.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product2.png' %}" alt="Product 2" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 2</h5>
+                    <p class="price">$39.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product3.png' %}" alt="Product 3" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 3</h5>
+                    <p class="price">$49.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Bridal Lehngas</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product1.png' %}" alt="Product 1" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 1</h5>
+                    <p class="price">$29.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product2.png' %}" alt="Product 2" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 2</h5>
+                    <p class="price">$39.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="product-card text-center">
+                    <img src="{% static 'app/images/products/product3.png' %}" alt="Product 3" class="img-fluid">
+                    <h5 class="mt-2">Brand Name 3</h5>
+                    <p class="price">$49.99</p>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .product-card {
+            border: 2px solid #FF8C00; /* Orange border */
+            border-radius: 10px;
+            overflow: hidden; /* Rounded corners */
+            transition: transform 0.3s ease; /* Animation */
+            background-color: #FFF; /* White background */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow */
+        }
+    
+        .product-card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+    
+        .product-card img {
+            height: 300px; /* Set a uniform height for images */
+            object-fit: cover; /* Ensure images cover the area without distortion */
+        }
+    
+        .btn-buy {
+            background-color: #FF0000; /* Red button */
+            color: white;
+            border-radius: 20px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+    
+        .btn-buy:hover {
+            background-color: #FF4500; /* Darker red on hover */
+        }
+    
+        .price {
+            font-weight: bold;
+            color: #FF8C00; /* Orange color for price */
+        }
+    </style>
+    
+{% endblock main-content %}
+{% block extra_js %}<script>
+    // First attempt with jQuery
+    $(document).ready(function(){
+        // Initialize the carousel
+        $('#heroCarousel').carousel({
+            interval: 2000,  // Change slides every 3 seconds
+            ride: 'carousel' // This is important for auto-play
+        });
+        
+        // Force start the carousel
+        $('#heroCarousel').carousel('cycle');
+    });{% endblock extra_js %}

@@ -1,0 +1,49 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Accessories{% endblock title %}
+{% block main-content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .product {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin: 10px;
+        display: inline-block;
+        width: 300px;
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .product:hover {
+        transform: scale(1.05);
+    }
+    .product img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;  /* Make sure images are not cropped improperly */
+    }
+    h1 {
+        color: #FF4500;  /* Orange-red color scheme */
+        text-align: center;
+    }
+</style>
+
+<h1>Our Accessories Collection</h1>
+<div class="product-list">
+    {% for accessory in accessories %}
+        <div class="product">
+            <h2>{{ accessory.title }}</h2>
+            <img src="{{ accessory.image.url }}" alt="{{ accessory.title }}">
+            <p><strong>Brand:</strong> {{ accessory.brand }}</p>
+            <p><strong>Price:</strong> ${{ accessory.price }}</p>
+            <p><strong>Description:</strong> {{ accessory.description }}</p>
+            <p><strong>Category:</strong> {{ accessory.category }}</p>
+            <p><strong>Color:</strong> {{ accessory.color }}</p>
+        </div>
+    {% empty %}
+        <p>No accessories available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock main-content %}

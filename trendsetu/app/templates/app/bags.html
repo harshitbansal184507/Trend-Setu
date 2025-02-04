@@ -1,0 +1,101 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Bags{% endblock title %}
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2.5em;
+        color: #d63c2e;
+        text-transform: uppercase;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .product {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        width: 300px;
+        text-align: center;
+    }
+
+    .product:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    img {
+        width: 100%;
+        height: 400px;
+        object-fit: contain;
+        background-color: #e7e7e7;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 10px 0;
+        color: #d63c2e;
+    }
+
+    p {
+        margin: 5px 10px;
+        color: #555;
+    }
+
+    .button {
+        display: block;
+        background-color: #d63c2e;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin: 10px auto;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .button:hover {
+        background-color: #b72a23;
+    }
+</style>
+
+<h1>Bags Collection</h1>
+<ul>
+    {% for bag in bags %}
+        <li class="product">
+            <img src="{{ bag.image.url }}" alt="{{ bag.title }}">
+            <h2>{{ bag.title }}</h2>
+            <p><strong>Brand:</strong> {{ bag.brand }}</p>
+            <p><strong>Size:</strong> {{ bag.size }}</p>
+            <p><strong>Price:</strong> ${{ bag.price }}</p>
+            <p><strong>Description:</strong> {{ bag.description }}</p>
+            <p><strong>Category:</strong> {{ bag.category }}</p>
+            <p><strong>Color:</strong> {{ bag.color }}</p>
+            <a href="#" class="button">Add to Cart</a>
+        </li>
+    {% empty %}
+        <li>No bags available.</li>
+    {% endfor %}
+</ul>
+{% endblock main-content %}
